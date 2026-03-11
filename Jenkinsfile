@@ -5,46 +5,32 @@ pipeline {
 
         stage('Pull from Git') {
             steps {
-                echo 'Pulling source code from Git repository...'
                 git branch: 'main', url: 'https://github.com/Saniajain1320/APD_jenkins_trial.git'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Running Build Stage...'
-                bat 'Build.bat'
+                sh './build.sh'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running Test Stage...'
-                bat 'Test.bat'
+                sh './test.sh'
             }
         }
 
         stage('Quality Check') {
             steps {
-                echo 'Running Quality Gate...'
-                bat 'Quality.bat'
+                sh './quality.sh'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Running Deploy Stage...'
-                bat 'Deploy.bat'
+                sh './deploy.sh'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline executed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed.'
         }
     }
 }
